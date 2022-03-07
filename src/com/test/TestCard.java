@@ -25,7 +25,7 @@ public class TestCard {
             }
         }
         for (Card card : cardFinishingByFive) {
-            Assert.assertEquals(card.getBullHeads(), 2);
+            Assert.assertEquals(2, card.getBullHeads());
         }
     }
 
@@ -39,7 +39,7 @@ public class TestCard {
             }
         }
         for (Card card : cardFinishingByZero) {
-            Assert.assertEquals(card.getBullHeads(), 3);
+            Assert.assertEquals(3, card.getBullHeads());
         }
     }
 
@@ -54,13 +54,13 @@ public class TestCard {
             }
         }
         for (Card card : cardWithSameNumber) {
-            Assert.assertEquals(card.getBullHeads(), 5);
+            Assert.assertEquals(5, card.getBullHeads());
         }
     }
 
     @Test
     public void testSpecialCaseOfSevenBullHeads() {
-        Assert.assertEquals(new Card(55).getBullHeads(), 7);
+        Assert.assertEquals(7, new Card(55).getBullHeads());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class TestCard {
             }
         }
         for (Card card : defaultCards) {
-            Assert.assertEquals(card.getBullHeads(), 1);
+            Assert.assertEquals(1, card.getBullHeads());
         }
     }
 }
