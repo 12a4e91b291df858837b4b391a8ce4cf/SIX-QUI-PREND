@@ -17,11 +17,25 @@ public class Series {
     }
 
     public void addCard(Card card) {
-        for (int i = 0; i < serieList.size(); i++) {
-            boolean didSucceed = this.serieList.get(i).addCardToSerie(card);
-            if (didSucceed) {
-                return;
+        int indexOfSerieToAddCard = this.getIndexOfSerieToAddCard(card.getValue());
+        if (indexOfSerieToAddCard != -1) {
+            this.serieList.get(indexOfSerieToAddCard).addCardToSerie(card);
+        }
+    }
+
+    public int getIndexOfSerieToAddCard(int valueCard) {
+        int minDist = Integer.MAX_VALUE;
+        int resIndex = -1;
+        for (int i = 0; i < this.serieList.size(); ++i) {
+            Serie serie = this.serieList.get(i);
+            ArrayList<Card> cards = serie.getCards();
+            int topCard = cards.get(cards.size() - 1).getValue();
+            if (valueCard > topCard && valueCard - topCard < minDist) {
+                resIndex = i;
+                minDist = valueCard - topCard;
             }
         }
+        return resIndex;
+
     }
 }
