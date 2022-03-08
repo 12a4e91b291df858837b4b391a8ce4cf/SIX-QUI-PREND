@@ -1,5 +1,7 @@
 package com.sixQuiPrend;
 
+import java.util.ArrayList;
+
 public class Card {
     private final int value;
     private final int bullHeads;
@@ -28,5 +30,20 @@ public class Card {
 
     public int getBullHeads() {
         return this.bullHeads;
+    }
+
+    public String toString() {
+        return "" + this.value + ((this.bullHeads != 1) ? " (" + this.bullHeads + ")" : "");
+    }
+
+    public static String concatenateCards(ArrayList<Card> cards) {
+        String res = "";
+        for (int i = 0; i < cards.size(); i++) {
+            res += cards.get(i);
+            if (i != cards.size() - 1) {
+                res += ", ";
+            }
+        }
+        return res;
     }
 }
