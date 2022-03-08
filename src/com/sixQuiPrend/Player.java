@@ -15,6 +15,7 @@ public class Player {
     public Player(String name, ArrayList<Card> hand) {
         this.name = name;
         this.hand = new ArrayList<>(hand);
+        this.penalty = 0;
     }
 
     public String getName() {
