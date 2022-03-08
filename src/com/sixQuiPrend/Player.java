@@ -47,7 +47,7 @@ public class Player {
 
     public void playCardInSerie(Series series, int cardIndex) {
         Card card = this.hand.get(cardIndex);
-        series.addCard(card);
+        this.penalty += series.addCardAndGetPenalty(card);
         this.hand.remove(cardIndex);
     }
 }

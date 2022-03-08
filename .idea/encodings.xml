@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/com/sixQuiPrend/Card.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/com/sixQuiPrend/Game.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/com/sixQuiPrend/Series.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/com/sixQuiPrend/SixQuiPrend.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/com/test/GameTest.java" charset="ISO-8859-1" />
   </component>

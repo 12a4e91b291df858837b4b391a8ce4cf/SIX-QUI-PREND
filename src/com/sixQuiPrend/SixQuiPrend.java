@@ -55,24 +55,12 @@ public class SixQuiPrend {
     private static void playCard(Player player, Game game) {
         System.out.print("Saisissez votre choix :");
         String choice = scan.nextLine();
-        while (!(isNumeric(choice) && player.getCardIndex(Integer.parseInt(choice)) != -1)) {
+        while (!(Helper.isNumeric(choice) && player.getCardIndex(Integer.parseInt(choice)) != -1)) {
             System.out.print("Vous n'avez pas cette carte, saisissez votre choix :");
             choice = scan.nextLine();
         }
         int cardIndex = player.getCardIndex(Integer.parseInt(choice));
         player.playCardInSerie(game.getSeries(), cardIndex);
-    }
-
-    private static boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
     }
 
     private static void clearScreen() {
