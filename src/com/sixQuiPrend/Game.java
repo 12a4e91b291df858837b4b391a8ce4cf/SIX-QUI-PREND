@@ -92,6 +92,15 @@ public class Game {
         this("config.txt");
     }
 
+    public boolean isEndGame() {
+        for (Player player : this.players) {
+            if (player.getHand().size() != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public ArrayList<Player> getPlayers() {
         return this.players;
     }

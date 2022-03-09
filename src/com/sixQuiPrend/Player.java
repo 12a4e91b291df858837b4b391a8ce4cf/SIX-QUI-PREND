@@ -22,15 +22,6 @@ public class Player implements Comparable<Player> {
         return this.name;
     }
 
-    public int getCardIndex(int cardValue) {
-        for (int i = 0; i < this.hand.size(); ++i) {
-            if (this.hand.get(i).getValue() == cardValue) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public ArrayList<Card> getHand() {
         return this.hand;
     }
@@ -45,10 +36,9 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public void playCardInSerie(Series series, int cardIndex) {
-        Card card = this.hand.get(cardIndex);
-        this.penalty += series.addCardAndGetPenalty(card);
-        this.hand.remove(cardIndex);
+    public void playCardInSerie(Series series, Card card) {
+        this.penalty += series.addCardAndGetPenalty(card, this);
+        this.hand.remove(card);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class Series {
         return this.serieList;
     }
 
-    public int addCardAndGetPenalty(Card card) {
+    public int addCardAndGetPenalty(Card card, Player player) {
         int indexOfSerieToAddCard = this.getIndexOfSerieToAddCard(card.getValue());
         if (indexOfSerieToAddCard != -1) {
             Serie serie = this.serieList.get(indexOfSerieToAddCard);
@@ -30,7 +30,9 @@ public class Series {
             return 0;
         } else {
             Scanner scan = new Scanner(System.in);
-            System.out.print("Saisissez votre série: ");
+            System.out.println("Pour poser la carte " + card.getValue() + ", " + player.getName() + " doit choisir la série qu'il va ramasser");
+            System.out.println(this);
+            System.out.print("Saisissez votre série : ");
             String choice = scan.nextLine();
             while (!(Helper.isNumeric(choice) && 1 <= Integer.parseInt(choice) && Integer.parseInt(choice) <= this.serieList.size())) {
                 System.out.print("Ce n'est pas une serie valide, saisissez votre série: ");
@@ -39,14 +41,6 @@ public class Series {
             int indexSerie = Integer.parseInt(choice) - 1;
             return this.restartSerieAndGetPenalty(indexSerie, card);
         }
-    }
-
-    private int restartSerieAndGetPenalty(int indexSerie, Card card) {
-        Serie serieToRetrieve = this.serieList.get(indexSerie);
-        int totalPenalty = serieToRetrieve.getTotalPenalty();
-        serieToRetrieve.getCards().clear();
-        serieToRetrieve.getCards().add(card);
-        return totalPenalty;
     }
 
     public int getIndexOfSerieToAddCard(int valueCard) {
@@ -63,5 +57,23 @@ public class Series {
         }
         return resIndex;
 
+    }
+
+    private int restartSerieAndGetPenalty(int indexSerie, Card card) {
+        Serie serieToRetrieve = this.serieList.get(indexSerie);
+        int totalPenalty = serieToRetrieve.getTotalPenalty();
+        serieToRetrieve.getCards().clear();
+        serieToRetrieve.getCards().add(card);
+        return totalPenalty;
+    }
+
+    public String toString() {
+        String res = "";
+        for (int i = 0; i < this.serieList.size(); i++) {
+            Serie serie = this.serieList.get(i);
+            String message = "- Série n°" + (i + 1) + " : " + Card.concatenateCards(serie.getCards());
+            res += message + '\n';
+        }
+        return res;
     }
 }

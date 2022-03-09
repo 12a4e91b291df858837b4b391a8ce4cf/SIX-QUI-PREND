@@ -2,27 +2,56 @@ package com.sixQuiPrend;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Scanner;
 
 public class SixQuiPrend {
-    public static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) throws Exception {
         Game game = new Game();
         displayWelcomeMessage(game);
-        ArrayList<Player> players = game.getPlayers();
-        for (int i = 0; ; i = (i + 1) % players.size()) {
-            Player player = players.get(i);
-            if (player.getHand().size() == 0) {
-                break;
+        while (!game.isEndGame()) {
+            ArrayList<Choice> choices = getPlayerChoices(game);
+            Collections.sort(choices);
+            displayChoices(choices);
+            for (Choice choice : choices) {
+                Player player = choice.player;
+                Card card = choice.card;
+                choice.setPreviousPenalty(choice.player.getPenalty());
+                player.playCardInSerie(game.getSeries(), card);
             }
-            displayTable(player, game);
-            playCard(player, game);
+            displayRecapRound(choices);
             clearScreen();
         }
         displayEndGameResult(game);
+    }
+
+    private static void displayRecapRound(ArrayList<Choice> choices) {
+        String res = "";
+        for (Choice choice : choices) {
+            int scoreDiff = choice.player.getPenalty() - choice.getPreviousPenalty();
+            if (scoreDiff != 0) {
+                res += choice.player.getName() + " a ramassé " + scoreDiff + " têtes de boeufs.\n";
+            }
+        }
+        if (res.equals("")) {
+            res = "Aucun joueur ne ramasse de tête de boeufs";
+        }
+        System.out.println(res);
+    }
+
+    private static void displayChoices(ArrayList<Choice> choices) {
+        String res = "Les cartes ";
+        for (int i = 0; i < choices.size(); i++) {
+            Choice choice = choices.get(i);
+            res += choice.card.getValue() + " (" + choice.player.getName() + ") ";
+            if (i < choices.size() - 2) {
+                res += ", ";
+            } else if (i == choices.size() - 2) {
+                res += "et ";
+            }
+        }
+        res += " ont été posées";
+        System.out.println(res);
     }
 
     private static void displayEndGameResult(Game game) {
@@ -49,34 +78,36 @@ public class SixQuiPrend {
         System.out.println(welcomeMessage);
     }
 
-    private static void displayTable(Player player, Game game) throws IOException {
+    private static void displayTableAndPlayersHand(Player player, Game game) throws IOException {
         String startTurnString = "A " + player.getName() + " de jouer";
         System.out.println(startTurnString);
         System.in.read();
         Series series = game.getSeries();
-        for (int i = 0; i < series.getSerieList().size(); i++) {
-            Serie serie = series.getSerieList().get(i);
-            String message = "- Série n°" + (i + 1) + " : " + Card.concatenateCards(serie.getCards());
-            System.out.println(message);
-        }
+        System.out.println(series);
         String playersCards = "Vos cartes : " + Card.concatenateCards(player.getHand());
         System.out.println(playersCards);
     }
 
-    private static void playCard(Player player, Game game) {
-        System.out.print("Saisissez votre choix :");
-        String choice = scan.nextLine();
-        while (!(Helper.isNumeric(choice) && player.getCardIndex(Integer.parseInt(choice)) != -1)) {
-            System.out.print("Vous n'avez pas cette carte, saisissez votre choix :");
-            choice = scan.nextLine();
+    private static ArrayList<Choice> getPlayerChoices(Game game) throws IOException {
+        ArrayList<Player> players = game.getPlayers();
+        ArrayList<Choice> choices = new ArrayList<>();
+        for (Player player : players) {
+            Choice choice = new Choice(player);
+            displayTableAndPlayersHand(player, game);
+            choice.chooseCard(player);
+            choices.add(choice);
         }
-        int cardIndex = player.getCardIndex(Integer.parseInt(choice));
-        player.playCardInSerie(game.getSeries(), cardIndex);
+        return choices;
     }
 
     private static void clearScreen() {
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-
 }
