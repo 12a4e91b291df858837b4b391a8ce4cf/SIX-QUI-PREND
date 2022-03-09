@@ -2,6 +2,8 @@ package com.sixQuiPrend;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class SixQuiPrend {
@@ -20,7 +22,16 @@ public class SixQuiPrend {
             playCard(player, game);
             clearScreen();
         }
-        System.out.println("La partie est finie");
+        displayEndGameResult(game);
+    }
+
+    private static void displayEndGameResult(Game game) {
+        ArrayList<Player> players = game.getPlayers();
+        Collections.sort(players);
+        System.out.println("** Score Final");
+        for (Player player : players) {
+            System.out.println(player.getName() + " a ramassé " + player.getPenalty() + " tête de boeufs");
+        }
     }
 
     private static void displayWelcomeMessage(Game game) {
