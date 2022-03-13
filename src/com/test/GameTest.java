@@ -1,9 +1,6 @@
 package com.test;
 
-import com.sixQuiPrend.Card;
-import com.sixQuiPrend.Game;
-import com.sixQuiPrend.Player;
-import com.sixQuiPrend.Serie;
+import com.sixQuiPrend.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -62,5 +59,46 @@ public class GameTest {
             Assert.assertTrue(nbEncountered[i] <= 1);
         }
 
+    }
+
+    @Test
+    public void testAreAllCardsInDeck() throws Exception {
+        Game game = new Game();
+        ArrayList<Integer> deck = game.getDeck();
+        int cardsSeen[] = new int[105];
+        for (int i = 0; i < 104; i++) {
+            int card = deck.get(i);
+            cardsSeen[card] = cardsSeen[card] + 1;
+        }
+        for (int i = 1; i <= 104 ; i++) {
+            Assert.assertEquals(1, cardsSeen[i]);
+        }
+    }
+
+    @Test
+    public void testAreFourCardsInSeries() throws Exception {
+        Game game = new Game();
+        Series series = game.getSeries();
+        Assert.assertEquals(4, series.getSerieList().size());
+        for (Serie serie: series.getSerieList()) {
+            Assert.assertEquals(1, serie.getCards().size());
+        }
+    }
+
+    @Test
+    public void testEachPlayerGotTenCards() throws Exception {
+        Game game = new Game();
+        for (Player player: game.getPlayers()) {
+            Assert.assertEquals(10, player.getHand().size());
+        }
+    }
+
+    @Test
+    public void testIsEndGameWheNoCardLeftToPlay() throws Exception {
+        Game game = new Game();
+        for(Player player : game.getPlayers()) {
+            player.getHand().clear();
+        }
+        Assert.assertTrue(game.isEndGame());
     }
 }

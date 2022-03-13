@@ -3,7 +3,7 @@ package com.sixQuiPrend;
 import java.util.ArrayList;
 
 public class Player implements Comparable<Player> {
-    private String name;
+    private final String name;
     private ArrayList<Card> hand;
     private int penalty;
 
@@ -39,6 +39,10 @@ public class Player implements Comparable<Player> {
     public void playCardInSerie(Series series, Card card) {
         this.penalty += series.addCardAndGetPenalty(card, this);
         this.hand.remove(card);
+    }
+
+    public void setPenalty(int penalty) {
+        this.penalty = penalty;
     }
 
     @Override

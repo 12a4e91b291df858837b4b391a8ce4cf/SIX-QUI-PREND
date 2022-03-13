@@ -15,10 +15,6 @@ public class Series {
         }
     }
 
-    public ArrayList<Serie> getSerieList() {
-        return this.serieList;
-    }
-
     public int addCardAndGetPenalty(Card card, Player player) {
         int indexOfSerieToAddCard = this.getIndexOfSerieToAddCard(card.getValue());
         if (indexOfSerieToAddCard != -1) {
@@ -59,12 +55,16 @@ public class Series {
 
     }
 
-    private int restartSerieAndGetPenalty(int indexSerie, Card card) {
+    public int restartSerieAndGetPenalty(int indexSerie, Card card) {
         Serie serieToRetrieve = this.serieList.get(indexSerie);
         int totalPenalty = serieToRetrieve.getTotalPenalty();
         serieToRetrieve.getCards().clear();
         serieToRetrieve.getCards().add(card);
         return totalPenalty;
+    }
+
+    public ArrayList<Serie> getSerieList() {
+        return this.serieList;
     }
 
     public String toString() {

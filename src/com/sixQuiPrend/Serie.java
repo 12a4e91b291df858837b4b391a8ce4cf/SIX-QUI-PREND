@@ -10,10 +10,6 @@ public class Serie {
         cards.add(new Card(valueCard));
     }
 
-    public ArrayList<Card> getCards() {
-        return cards;
-    }
-
     public int getTotalPenalty() {
         int total = 0;
         for (Card card : this.cards) {
@@ -21,4 +17,10 @@ public class Serie {
         }
         return total;
     }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(ArrayList<Card> cards) { this.cards = cards; }
 }

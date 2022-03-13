@@ -43,8 +43,14 @@ public class Choice implements Comparable<Choice> {
         return previousPenalty;
     }
 
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
     @Override
     public int compareTo(Choice choice2) {
         return this.card.getValue() - choice2.card.getValue();
     }
+
+
 }

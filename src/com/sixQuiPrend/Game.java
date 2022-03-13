@@ -27,6 +27,10 @@ public class Game {
         this.initSeries();
     }
 
+    public Game() throws Exception {
+        this("config.txt");
+    }
+
     private void initDeck() {
         this.deck = new ArrayList<>();
         for (int i = 1; i <= NB_CARDS; i++) {
@@ -51,6 +55,15 @@ public class Game {
             initialCards[i] = this.deck.get(this.currentCardIndex + i + 1);
         }
         this.series = new Series(initialCards, NB_MAX_CARD_SERIES);
+    }
+
+    public boolean isEndGame() {
+        for (Player player : this.players) {
+            if (player.getHand().size() != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static ArrayList<String> getPlayersNameFromFile(String configFileName) {
@@ -88,24 +101,15 @@ public class Game {
         return hands;
     }
 
-    public Game() throws Exception {
-        this("config.txt");
-    }
-
-    public boolean isEndGame() {
-        for (Player player : this.players) {
-            if (player.getHand().size() != 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public ArrayList<Player> getPlayers() {
         return this.players;
     }
 
     public Series getSeries() {
         return this.series;
+    }
+
+    public ArrayList<Integer> getDeck() {
+        return this.deck;
     }
 }

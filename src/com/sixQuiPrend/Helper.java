@@ -1,7 +1,7 @@
 package com.sixQuiPrend;
 
 public class Helper {
-    static boolean isNumeric(String strNum) {
+    public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
         }
